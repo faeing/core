@@ -65,7 +65,7 @@ class UpdatePacket
 class PacketCompressor
 {
     public:
-        static void Compress(void* dst, uint32 *dst_size, void* src, int src_size);
+        static void Compress(void* dst, uint32* dst_size, void* src, int src_size);
 };
 
 class UpdateData
@@ -75,12 +75,12 @@ class UpdateData
         ~UpdateData();
 
         void AddOutOfRangeGUID(ObjectGuidSet& guids);
-        void AddOutOfRangeGUID(ObjectGuid const &guid);
-        void AddUpdateBlock(const ByteBuffer &block);
+        void AddOutOfRangeGUID(ObjectGuid const& guid);
+        void AddUpdateBlock(ByteBuffer const& block);
         void Send(WorldSession* session, bool hasTransport = false);
-        bool BuildPacket(WorldPacket *packet, bool hasTransport = false);
-        bool BuildPacket(WorldPacket *packet, UpdatePacket const* updPacket, bool hasTransport = false);
-        bool HasData() { return m_datas.size() || !m_outOfRangeGUIDs.empty(); }
+        bool BuildPacket(WorldPacket* packet, bool hasTransport = false);
+        bool BuildPacket(WorldPacket* packet, UpdatePacket const* updPacket, bool hasTransport = false);
+        bool HasData() { return !m_datas.empty() || !m_outOfRangeGUIDs.empty(); }
         void Clear();
 
         ObjectGuidSet const& GetOutOfRangeGUIDs() const { return m_outOfRangeGUIDs; }
@@ -93,12 +93,14 @@ class UpdateData
 class MovementData
 {
     public:
-        MovementData(WorldObject* owner = NULL) : _buffer(100), _owner(owner) {}
+        MovementData(WorldObject* owner = nullptr) : _buffer(100), _owner(owner) {}
         ~MovementData() {}
         void AddPacket(WorldPacket& data);
         void SetUnitSpeed(uint32 opcode, ObjectGuid const& unit, float value);
         void SetSplineOpcode(uint32 opcode, ObjectGuid const& unit);
+#if SUPPORTED_CLIENT_BUILD > CLIENT_BUILD_1_8_4
         bool BuildPacket(WorldPacket& data);
+#endif
     protected:
         ByteBuffer _buffer;
         WorldObject* _owner; // If not null, we dont compress data

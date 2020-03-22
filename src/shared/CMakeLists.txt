@@ -35,6 +35,7 @@ set (shared_SRCS
     Util.h
     WheatyExceptionReport.h
     WorldPacket.h
+    Auth/ARC4.h
     Auth/AuthCrypt.h
     Auth/base32.h
     Auth/BigNumber.h
@@ -72,6 +73,7 @@ set (shared_SRCS
     Util.cpp
     Duration.h
     WheatyExceptionReport.cpp
+    Auth/ARC4.cpp
     Auth/AuthCrypt.cpp
     Auth/base32.cpp
     Auth/BigNumber.cpp
@@ -110,6 +112,13 @@ if(WIN32)
     revision.h
     migrations_list.h
   )
+  
+  if (NOT MSVC)
+    list(REMOVE_ITEM shared_SRCS
+      WheatyExceptionReport.cpp
+      WheatyExceptionReport.h
+    )
+  endif()
   
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /D__ACE_INLINE__")
 else()
@@ -153,6 +162,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${ACE_INCLUDE_DIR}
   ${MYSQL_INCLUDE_DIR}
+  ${OPENSSL_INCLUDE_DIR}
 )
 
 if(WIN32)
@@ -169,5 +179,9 @@ if(UNIX)
   find_package(Threads)
   target_link_libraries(shared ${ACE_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 endif(UNIX)
+
+if(MINGW)
+  target_link_libraries(shared ${ACE_LIBRARIES} -lws2_32)
+endif()
 
 SET_TARGET_PROPERTIES (shared PROPERTIES FOLDER "Game Libs")

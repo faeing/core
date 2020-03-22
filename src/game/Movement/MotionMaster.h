@@ -89,7 +89,7 @@ class MANGOS_DLL_SPEC MotionMaster : std::stack<MovementGenerator *>
 
     public:
 
-        explicit MotionMaster(Unit *unit) : m_needsAsyncUpdate(false), m_owner(unit), m_expList(nullptr), m_cleanFlag(MMCF_NONE) {}
+        explicit MotionMaster(Unit* unit) : m_needsAsyncUpdate(false), m_owner(unit), m_expList(nullptr), m_cleanFlag(MMCF_NONE) {}
         ~MotionMaster();
 
         void Initialize();
@@ -128,7 +128,7 @@ class MANGOS_DLL_SPEC MotionMaster : std::stack<MovementGenerator *>
         void ClearType(MovementGeneratorType moveType);
 
         void MoveIdle();
-        void MoveRandom(bool use_current_position = false, float wander_distance = 0.0f);
+        void MoveRandom(bool use_current_position = false, float wander_distance = 0.0f, uint32 expire_time = 0);
         void MoveTargetedHome();
         void MoveFollow(Unit* target, float dist, float angle);
         void MoveChase(Unit* target, float dist = 0.0f, float angle = 0.0f);
@@ -148,7 +148,7 @@ class MANGOS_DLL_SPEC MotionMaster : std::stack<MovementGenerator *>
 
         MovementGeneratorType GetCurrentMovementGeneratorType() const;
 
-        void propagateSpeedChange();
+        void PropagateSpeedChange();
         bool SetNextWaypoint(uint32 pointId);
 
         uint32 getLastReachedWaypoint() const;

@@ -70,13 +70,13 @@ class MANGOS_DLL_SPEC WaypointMovementGenerator<Creature>
   public PathMovementBase<Creature, WaypointPath const*>
 {
     public:
-        WaypointMovementGenerator(Creature &, bool repeating = true) : i_nextMoveTime(0), m_isArrivalDone(false), m_repeating(repeating), m_lastReachedWaypoint(0) {}
-        ~WaypointMovementGenerator() { i_path = NULL; }
+        WaypointMovementGenerator(Creature &, bool repeating = true) : i_nextMoveTime(0), m_isArrivalDone(false), m_repeating(repeating), m_isWandering(false), m_nextNodeSplineIdx(-1), m_lastReachedWaypoint(0) {}
+        ~WaypointMovementGenerator() { i_path = nullptr; }
         void Initialize(Creature &u);
         void Interrupt(Creature &);
         void Finalize(Creature &);
         void Reset(Creature &u);
-        bool Update(Creature &u, const uint32 &diff);
+        bool Update(Creature &u, uint32 const& diff);
         void InitializeWaypointPath(Creature& u, int32 id, uint32 startPoint, WaypointPathOrigin wpSource, uint32 initialDelay, uint32 overwriteEntry, bool repeat);
 
         MovementGeneratorType GetMovementGeneratorType() const { return WAYPOINT_MOTION_TYPE; }
@@ -101,7 +101,7 @@ class MANGOS_DLL_SPEC WaypointMovementGenerator<Creature>
             return i_nextMoveTime.Passed();
         }
 
-        void OnArrived(Creature&);
+        bool OnArrived(Creature&);
         void StartMove(Creature&);
 
         void StartMoveNow(Creature& creature)
@@ -113,6 +113,8 @@ class MANGOS_DLL_SPEC WaypointMovementGenerator<Creature>
         ShortTimeTracker i_nextMoveTime;
         bool m_isArrivalDone;
         bool m_repeating;
+        bool m_isWandering;
+        int32 m_nextNodeSplineIdx;
         uint32 m_lastReachedWaypoint;
 
         int32 m_pathId;
@@ -136,7 +138,7 @@ class MANGOS_DLL_SPEC FlightPathMovementGenerator
         void Finalize(Player &);
         void Interrupt(Player &);
         void Reset(Player &, float modSpeed = 1.0f);
-        bool Update(Player &, const uint32 &);
+        bool Update(Player &, uint32 const&);
         MovementGeneratorType GetMovementGeneratorType() const { return FLIGHT_MOTION_TYPE; }
 
         TaxiPathNodeList const& GetPath() { return *i_path; }
@@ -161,7 +163,7 @@ class MANGOS_DLL_SPEC PatrolMovementGenerator
         void Finalize(Creature &);
         void Interrupt(Creature &);
         void Reset(Creature &);
-        bool Update(Creature &, const uint32 &);
+        bool Update(Creature &, uint32 const&);
         void StartMove(Creature&);
         MovementGeneratorType GetMovementGeneratorType() const { return PATROL_MOTION_TYPE; }
 

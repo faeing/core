@@ -24,26 +24,28 @@
 #include "Database/SQLStorageImpl.h"
 #include "Database/DatabaseEnv.h"
 
-const char CreatureInfosrcfmt[] = "iiiiissiiiiiiiiiiffffffifffiifiiiiiiiiiiffiiiiiiiiiiiiiiiiiiiisiiiliiiiiiis";
-const char CreatureInfodstfmt[] = "iiiiissiiiiiiiiiiffffffifffiifiiiiiiiiiiffiiiiiiiiiiiiiiiiiiiisiiiliiiiiiii";
-const char CreatureDataAddonInfofmt[] = "iiibbiis";
-const char CreatureModelfmt[] = "iffbii";
-const char CreatureInfoAddonInfofmt[] = "iiibbiis";
-const char EquipmentInfofmt[] = "iiii";
-const char GameObjectInfosrcfmt[] = "iiisiifiiiiiiiiiiiiiiiiiiiiiiiiiis";
-const char GameObjectInfodstfmt[] = "iiisiifiiiiiiiiiiiiiiiiiiiiiiiiiii";
-const char ItemPrototypesrcfmt[] = "iiissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiififfiffiffiffiffiiiiiiiiiiiifiiiiiifiiiiiifiiiiiifiiiiiifiiiiiiiiiiiiiiiiiiiiiiii";
-const char ItemPrototypedstfmt[] = "iiissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiififfiffiffiffiffiiiiiiiiiiiifiiiiiifiiiiiifiiiiiifiiiiiifiiiiiiiiiiiiiiiiiiiiiiiix";
-const char PageTextfmt[] = "isi";
-const char MapEntrysrcfmt[] = "iiiiiiiiiffss";
-const char MapEntrydstfmt[] = "iiiiiiiiiffsi";
-const char ConditionsSrcFmt[] = "iiiiiii";
-const char ConditionsDstFmt[] = "iiiiiii";
-const char AreaEntryfmt[] = "iiiiiisii";
+char const CreatureInfosrcfmt[] = "iiiiissiiiiiiiiiiffffffifffiifiiiiiiiiiiffiiiiiiiiiiiiiiiiiiiisiiiliiiiiiis";
+char const CreatureInfodstfmt[] = "iiiiissiiiiiiiiiiffffffifffiifiiiiiiiiiiffiiiiiiiiiiiiiiiiiiiisiiiliiiiiiii";
+char const CreatureDataAddonInfofmt[] = "iiibbiis";
+char const CreatureModelfmt[] = "iffbi";
+char const CreatureInfoAddonInfofmt[] = "iiibbiis";
+char const EquipmentInfofmt[] = "iiii";
+char const GameObjectInfosrcfmt[] = "iiisiifiiiiiiiiiiiiiiiiiiiiiiiiiis";
+char const GameObjectInfodstfmt[] = "iiisiifiiiiiiiiiiiiiiiiiiiiiiiiiii";
+char const ItemPrototypesrcfmt[] = "iiissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiififfiffiffiffiffiiiiiiiiiiiifiiiiiifiiiiiifiiiiiifiiiiiifiiiiiiiiiiiiiiiiiiiiiiii";
+char const ItemPrototypedstfmt[] = "iiissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiififfiffiffiffiffiiiiiiiiiiiifiiiiiifiiiiiifiiiiiifiiiiiifiiiiiiiiiiiiiiiiiiiiiiiix";
+char const PageTextfmt[] = "isi";
+char const MapEntrysrcfmt[] = "iiiiiiiiiffss";
+char const MapEntrydstfmt[] = "iiiiiiiiiffsi";
+char const ConditionsSrcFmt[] = "iiiiiii";
+char const ConditionsDstFmt[] = "iiiiiii";
+char const AreaEntryfmt[] = "iiiiiisii";
+char const MailTemplatefmt[] = "issssssss";
+char const CreatureSpellDatafmt[] = "iiiii";
 
 SQLStorage sCreatureStorage(CreatureInfosrcfmt, CreatureInfodstfmt, "entry", "creature_template");
 SQLStorage sCreatureDataAddonStorage(CreatureDataAddonInfofmt, "guid", "creature_addon");
-SQLStorage sCreatureModelStorage(CreatureModelfmt, "modelid", "creature_model_info");
+SQLStorage sCreatureDisplayInfoAddonStorage(CreatureModelfmt, "display_id", "creature_display_info_addon");
 SQLStorage sCreatureInfoAddonStorage(CreatureInfoAddonInfofmt, "entry", "creature_template_addon");
 SQLStorage sEquipmentStorage(EquipmentInfofmt, "entry", "creature_equip_template");
 SQLStorage sItemStorage(ItemPrototypesrcfmt, ItemPrototypedstfmt, "entry", "item_template");
@@ -51,5 +53,7 @@ SQLStorage sPageTextStore(PageTextfmt, "entry", "page_text");
 SQLStorage sMapStorage(MapEntrysrcfmt, MapEntrydstfmt, "entry", "map_template");
 SQLStorage sConditionStorage(ConditionsSrcFmt, ConditionsDstFmt, "condition_entry", "conditions");
 SQLStorage sAreaStorage(AreaEntryfmt, "entry", "area_template");
+SQLStorage sMailTemplateStorage(MailTemplatefmt, "entry", "mail_text_template");
+SQLStorage sCreatureSpellDataStorage(CreatureSpellDatafmt, "entry", "pet_spell_data");
 
 SQLHashStorage sGOStorage(GameObjectInfosrcfmt, GameObjectInfodstfmt, "entry", "gameobject_template");
